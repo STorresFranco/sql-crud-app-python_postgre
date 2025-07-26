@@ -49,6 +49,11 @@ class expense_date_range(BaseModel):
     start_date:date
     end_date:date
 
+#%% Endpoint to check backend health
+@server.get("/")
+def root():
+    return {"message": "PostgreSQL backend is alive!"}
+
 #%% Endpoint for retrieve date
 
 @server.get("/expenses/fetch_date/{expense_date}",response_model=List[expense_model]) #This will return the subset defined in fetch_date_model
