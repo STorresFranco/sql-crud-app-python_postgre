@@ -4,6 +4,7 @@ from psycopg2.extras import RealDictCursor
 import contextlib
 from contextlib import contextmanager
 from backend.log_setup import logger_setup
+import os
 #%% Global variables
 ALLOWED_COLUMNS =["expense_date","amount","category","notes"]
 ALLOWED_OPERATORS =[">",">=","<","<=","=","!=","like"]
@@ -25,12 +26,12 @@ def get_db_cursor(commit=False): #We will set commit option as false to only com
     
     #******* Establishing connection
     logger.info(f"Connection attempt...")
-
-    connect=psycopg2.connect(
-        host="localhost",
-        user="postgres",
-        password="root",
-        database="expense_manager",
+    connection = psycopg2.connect(
+    host=os.getenv("PGHOST"),
+    port=os.getenv("PGPORT"),
+    user=os.getenv("PGUSER"),
+    password=os.getenv("PGPASSWORD"),
+    database=os.getenv("PGDATABASE")
     )
 
     if connect.status==extensions.STATUS_READY:
