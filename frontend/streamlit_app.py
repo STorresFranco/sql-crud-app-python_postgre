@@ -6,15 +6,6 @@ import pandas as pd
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
-"""
-Streamlit frontend for the PostgreSQL Expense Tracker app.
-
-Features:
-- Create, update, delete, and query expense records
-- Custom filters with flexible operators
-- Analytics dashboard for date range summaries
-Connects to a FastAPI backend using API_URL defined in Streamlit secrets.
-"""
 
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
