@@ -70,7 +70,7 @@ def condition_block(section_title: str, key_prefix: str,with_operator=False):
 #%% Frontend design
 st.title("Expense track management")
 st.markdown('''
-            This app allows users to execute SQL queries and analytics on a mock expense database.
+            This app allows users to execute SQL queries and analytics on a mock expense database, containing records from 2024-08.01 to 2024-09-30. (Plus any record the user adds or modifies)
             All operations are processed via a FastAPI backend connected to a PostgreSQL cloud database.
             Feel free to explore! But **please be careful with the delete and update options** — I'd like to keep the data clean for everyone. 🙂            
             '''
