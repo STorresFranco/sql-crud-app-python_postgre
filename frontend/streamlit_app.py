@@ -5,11 +5,12 @@ import requests
 import pandas as pd
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import os 
 
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
 FEATURES = ["expense_date", "amount", "category", "notes"]
-API_URL="http://localhost:8000"
+API_URL = os.getenv("API_URL", "https://sql-crud-app-pythonpostgre-production.up.railway.app")
 CATEGORIES=["Food","Rent","Shopping","Entertainment","Other"]
 format_date = "%Y-%m-%d" #For datess
 #%% Functions for frontend design
