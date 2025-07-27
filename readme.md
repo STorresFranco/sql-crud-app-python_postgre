@@ -1,5 +1,9 @@
 # 💸 Expense Tracker — Full-Stack SQL App (PostgreSQL + FastAPI + Streamlit)
 
+Author: Sebastian Torres
+Linkedin: https://www.linkedin.com/in/sebastian-torres-franco-3b3000115/
+# ---
+
 This project delivers a **complete end-to-end solution** for managing personal expense records using a cloud-hosted PostgreSQL database, a robust FastAPI backend, and a friendly Streamlit frontend.
 
 The app allows users to perform flexible SQL operations through a web interface, including:
@@ -9,7 +13,7 @@ The app allows users to perform flexible SQL operations through a web interface,
 
 ---
 
-## 🚀 Live Demo
+##  Live Demo
 
 > 🎯 [Try the live app](https://sql-crud-app-pythonpostgre-zxq6hzkbpyl25uyygefonx.streamlit.app/)  
 > 🛠️ Backend powered by [FastAPI](https://sql-crud-app-pythonpostgre-production.up.railway.app/docs)  
@@ -27,6 +31,7 @@ The app allows users to perform flexible SQL operations through a web interface,
 ✅ **FastAPI-Powered API:**  
 - RESTful routes for Create, Read, Update, Delete, and Analytics  
 - Paydantic validation for input format to minimize errors.
+- Rigurous log elaboration based on the user actions
 - Unitary testing of the API's functionalities using pytest
 - Custom query handling with flexible WHERE + operator mappings  
 - Deployed and documented at `/docs` with live Swagger UI
