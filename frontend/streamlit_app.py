@@ -10,7 +10,7 @@ import os
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
 FEATURES = ["expense_date", "amount", "category", "notes"]
-API_URL = os.getenv("API_URL", "https://sql-crud-app-pythonpostgre-production.up.railway.app")
+API_URL = st.secrets["API_URL"]
 CATEGORIES=["Food","Rent","Shopping","Entertainment","Other"]
 format_date = "%Y-%m-%d" #For datess
 #%% Functions for frontend design
