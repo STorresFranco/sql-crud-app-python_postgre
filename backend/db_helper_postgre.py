@@ -19,7 +19,7 @@ logger=logger_setup("logger_setup","server.log")
 def get_db_cursor(commit=False): #We will set commit option as false to only commit changes that come from Create Update and Delete operations
     '''
         Description:
-            Generator to establish connection with a local MySQL server, and commit changes to databases
+            Generator to establish connection with a cloud postgre serverand manage the transaction scope
         Inputs:
             commit (Bool): Set to False as default, when set to true in Create Update and Delete operations will commit changes to the database    
     '''
@@ -180,11 +180,11 @@ def update_record(set_dict,where_dict,operator_dict):
         Description:
             Function to update a record in expenses table
         Inputs:
-            set_dict(dictonary): Dictionary with key as column name, and value as new value for column
-            where_dict(dictionary): Dictionary containing the mapping for where clause, where key is column name, and value is mapping parammeter 
+            set_dict (dictonary): Dictionary with key as column name, and value as new value for column
+            where_dict (dictionary): Dictionary containing the mapping for where clause, where key is column name, and value is mapping parammeter 
             operator_dict (dictionary): Dictionary with operators to perform the custom query between column and value of where dict items.
         Returns
-            num_records(float): Number of records affected 
+            num_records (float): Number of records affected 
     '''    
     logger.info(f"Function call: update_record")
     
@@ -217,13 +217,12 @@ def update_record(set_dict,where_dict,operator_dict):
 def delete_record(where_dict,operator_dict):
     '''
      Description:
-        Function to return analytics information of the expenses between a start and end date.
+        Function to delete records from the expenses table based on WHERE conditions.
     Inputs:
-        start_date (str): Initial date of the date range (format: 'YYYY-MM-DD')
-        end_date (str): Final date of the date range (format: 'YYYY-MM-DD')
+        where_dict (dict): Column names and values to match.
+        operator_dict (dict): Operators to apply to each column condition.
     Returns:
-        total_expenses (list of dict): Expense summary per category (top 5), includes total and percent
-        top_expenses (list of dict): Top 5 individual expenses in date range
+        num_records (int): Number of records deleted.
     ''' 
     logger.info(f"Function call: delete_record")
 
@@ -244,6 +243,7 @@ def delete_record(where_dict,operator_dict):
         try:
             cursor.execute(query,params)
             num_records=cursor.rowcount
+            logger.warinng(f"Deleting {num_records} from expenses table")
             logger.info(f"Record delete: Record deleted successfully")
         except Exception as e:
             logger.error(f"Unable to delete record. Error {e}")
@@ -255,11 +255,11 @@ def expense_summary(start_date,end_date):
         Description
             Function to return analytics informatation of the expenseses between a start date and an end_date
         Inputs
-            start_date(str): Initial date of the date range
-            end_date(str): Final date of the date range
+            start_date (str): Initial date of the date range
+            end_date (str): Final date of the date range
         Returns
             total_expenses (dictionary): Expense by category in the date range. Contains Total expenses, and number of expenses
-            top_expenses(dictionary): Top 5 expenses in the date range. Contains expense date, total expense, category, notes      
+            top_expenses (dictionary): Top 5 expenses in the date range. Contains expense date, total expense, category, notes      
     '''
     logger.info("Function call: Expense analytics")
 
@@ -317,9 +317,4 @@ def expense_summary(start_date,end_date):
 
     return total_expenses,top_expenses
 
-#%% Test area
-if __name__=="__main__":
-    start_date="2024-08-02"
-    end_date="2024-08-02"
-    results,_=retrieve_date(start_date)
-    print(results)
+
