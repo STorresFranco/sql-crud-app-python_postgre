@@ -26,13 +26,7 @@ def get_db_cursor(commit=False): #We will set commit option as false to only com
     
     #******* Establishing connection
     logger.info(f"Connection attempt...")
-    connection = psycopg2.connect(
-    host=os.getenv("PGHOST"),
-    port=os.getenv("PGPORT"),
-    user=os.getenv("PGUSER"),
-    password=os.getenv("PGPASSWORD"),
-    database=os.getenv("PGDATABASE")
-    )
+    connection = psycopg2.connect(os.getenv("DATABASE_PUBLIC_URL"))
 
     if connect.status==extensions.STATUS_READY:
         logger.info("Connection result: Success")
