@@ -5,7 +5,16 @@ import requests
 import pandas as pd
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-import os 
+
+"""
+Streamlit frontend for the PostgreSQL Expense Tracker app.
+
+Features:
+- Create, update, delete, and query expense records
+- Custom filters with flexible operators
+- Analytics dashboard for date range summaries
+Connects to a FastAPI backend using API_URL defined in Streamlit secrets.
+"""
 
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
@@ -61,12 +70,19 @@ def condition_block(section_title: str, key_prefix: str,with_operator=False):
 
 #%% Frontend design
 st.title("Expense track management")
+st.markdown('''
+            This app allows users to execute SQL queries and analytics on a mock expense database.
+            All operations are processed via a FastAPI backend connected to a PostgreSQL cloud database.
+            Feel free to explore! But **please be careful with the delete and update options** — I'd like to keep the data clean for everyone. 🙂            
+            '''
+           )
 create_tab,update_tab,delete_tab,querie_tab,analytics_tab=st.tabs(["Create Records",
                                                                    "Update Records","Delete Records",
                                                                    "Fetch Records","Analytics"])
 
-                                       #Creating the tab design
 #*************************************** UPDATE TAB
+# Allows users to update values in the database based on multiple conditions
+
 with update_tab:
     with st.expander("New values"):
         set_dict = condition_block("New Values", "set",False)
@@ -99,6 +115,7 @@ with update_tab:
             st.write(response.text)
 
 #*************************************** DELETE TAB
+#Allow users to delete values from the database based on where conditions
 
 with delete_tab:
     where_dict, where_operators = condition_block("Where to delete", "where_delete",True)
@@ -124,6 +141,8 @@ with delete_tab:
             st.write(response.text)
 
 #*************************************** CREATE TAB
+# Users can submit up to 5 new records in the data base
+
 with create_tab:
     #Date input to create new expenses
     expense_date=st.date_input("Enter date",date(2024,8,1),key="create_date")
@@ -170,6 +189,7 @@ with create_tab:
                 st.write(response.text)
 
 #*************************************** FETCH RECORDS TAB
+# Users can either fetch by exact date or use flexible filtering based on multiple conditions
 
 with querie_tab:
     with st.expander("Query by date"):
@@ -180,7 +200,10 @@ with querie_tab:
                 st.success("Records by date retrieved successfully")
                 data=response.json()
                 df=pd.DataFrame(data)
-                st.dataframe(df)
+                if not df.empty:
+                    st.dataframe(df)
+                else:
+                    st.info("No results found")    
             else:
                 st.error(f"Error retrieving the date information")
                 st.write(response.text)
@@ -203,12 +226,17 @@ with querie_tab:
                 st.success("Custom query executed successfully")
                 results=response.json()
                 df_results_custom_query=pd.DataFrame(results)
-                st.dataframe(df_results_custom_query)
+                if not df_results_custom_query.empty:
+                    st.dataframe(df_results_custom_query)
+                else:
+                    st.info("No results found")
             else:
                 st.error("Failed to execute custom query")
                 st.write(response.text)
 
-#*************************************** FETCH RECORDS TAB
+#*************************************** ANALYTICS RECORDS TAB
+#Users can execute an analytics dashboard for a given date range
+
 with analytics_tab:
     start_date=st.date_input("Start Date",value="today",key="start_date_range")
     end_date=st.date_input("End Date",value="today",key="end_date_range")
