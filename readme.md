@@ -2,7 +2,7 @@
 
 Author: Sebastian Torres
 Linkedin: https://www.linkedin.com/in/sebastian-torres-franco-3b3000115/
-# ---
+# ___________________________________________________________________________________
 
 This project delivers a **complete end-to-end solution** for managing personal expense records using a cloud-hosted PostgreSQL database, a robust FastAPI backend, and a friendly Streamlit frontend.
 
