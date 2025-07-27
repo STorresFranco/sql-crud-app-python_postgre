@@ -1,6 +1,7 @@
 # 💸 Expense Tracker — Full-Stack SQL App (PostgreSQL + FastAPI + Streamlit)
 
 **Author: Sebastian Torres**
+
 **Linkedin: https://www.linkedin.com/in/sebastian-torres-franco-3b3000115/**
 
 ***
