@@ -57,7 +57,15 @@ def root():
 #%% Endpoint for retrieve date
 
 @server.get("/expenses/fetch_date/{expense_date}",response_model=List[expense_model]) #This will return the subset defined in fetch_date_model
-def get_expenses_by_date(expense_date:date):
+def server_fetch_date(expense_date:date):
+    '''
+    Description
+        Retrieve all expenses from a given date in format YYYY-MM-DD
+    Inputs:
+        expense_date (date): Date in format YYYY-MM-DD
+    Returns
+        List[expense_model]: List of expenses for the specified date
+    '''
     results=db_helper_postgre.retrieve_date(expense_date)
     if len(results)==0: 
         raise HTTPException(status_code=500,detail="Failed to retrieve data or date does not exist in database")
@@ -65,7 +73,18 @@ def get_expenses_by_date(expense_date:date):
 #%% Endpoint to create a record
 
 @server.post("/expenses")
-def create_expense(expense_info:expense_payload):
+def server_create_expense(expense_info:expense_payload):
+    '''
+    Description:
+        Create an expense using information of: 
+    Inputs:
+        expense_date (date): as YYYY-MM-DD
+        amount (float): Amount of the expense
+        category (str): As one of Shopping, Food, Entertainment, Rent, Other
+        notes (str): Optional field for notes of the expense
+    Returns
+        None
+    '''
     for entry in expense_info.entries:
         db_helper_postgre.create_record(
             expense_date=expense_info.expense_date,
@@ -75,7 +94,16 @@ def create_expense(expense_info:expense_payload):
         ) 
 #%% Endpoint to custom query
 @server.post("/expenses/custom_query")
-def custom_query(payload:expense_custom_query):
+def server_custom_query(payload:expense_custom_query):
+    '''
+    Description:
+        Query expenses based on Where conditions of: 
+    Inputs:
+        where_dict (json): json payload containing the Where clause column as key names and conditions to query as values 
+        operator_dict (json): json payload containg the relational operator between column name and value of where_dict
+    Returns
+        results (int): Number of records updated
+    '''
     #****** Form the where query
     where_dict=payload.where_info.model_dump()
     operator_dict=payload.operator_info.model_dump()
@@ -88,6 +116,16 @@ def custom_query(payload:expense_custom_query):
 #%% Endpoint to delete record
 @server.delete("/expenses")
 def server_delete(payload:expense_custom_query):
+    '''
+    Description:
+        Delete expenses based on Where conditions
+    Inputs:
+        where_dict (json): json payload containing the Where clause column as key names and conditions to query as values 
+        operator_dict (json): json payload containg the relational operator between column name and value of where_dict
+    Returns
+        results (int): Number of records updated
+    '''
+
     where_dict=payload.where_info.model_dump()
     operator_dict=payload.operator_info.model_dump()
     num_records=db_helper_postgre.delete_record(where_dict,operator_dict)
@@ -95,6 +133,17 @@ def server_delete(payload:expense_custom_query):
 #%% Endpoint to update record
 @server.put("/expenses")
 def server_update(payload:expense_set_mapping):
+    '''
+    Description:
+        Update expenses based on Set of new values and Where conditions 
+    Inputs:
+        set_dict (json): json payload containing the column as key and new values as values.
+        where_dict (json): json payload containing the Where clause column as key names and conditions to query as values 
+        operator_dict (json): json payload containg the relational operator between column name and value of where_dict
+    Returns
+        message of status
+    '''
+    
     set_dict=payload.set_info.model_dump()
     where_dict=payload.where_info.model_dump()
     operator_dict=payload.operator_info.model_dump()
@@ -104,6 +153,14 @@ def server_update(payload:expense_set_mapping):
 #%% Endpoint for analytics
 @server.post("/analytics")
 def server_analytics(payload:expense_date_range):
+    '''
+    Description:
+        Execute the analytics dashboard based on a date range
+    Inputs:
+        expense_date_date (json): json payload containing start date and end date
+    Returns
+        dictionary containing summary of expenses and top expenses. 
+    '''
     start_date=payload.start_date
     end_date=payload.end_date
     total_expense,top_expense=db_helper_postgre.expense_summary(start_date,end_date)
