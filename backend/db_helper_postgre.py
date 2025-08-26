@@ -271,7 +271,7 @@ def expense_summary(start_date,end_date):
                 category,
                 SUM(amount) AS total_expense
             FROM expenses
-            WHERE expense_date::date BETWEEN %s::date AND %s::date
+            WHERE expense_date BETWEEN %s AND %s
             GROUP BY category
             ORDER BY total_expense DESC
             LIMIT 5
@@ -316,6 +316,7 @@ def expense_summary(start_date,end_date):
             raise RuntimeError("Error retrieving date range")
 
     return total_expenses,top_expenses
+
 
 
 
