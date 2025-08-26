@@ -311,6 +311,8 @@ def expense_summary(start_date,end_date):
 
     with get_db_cursor() as cursor:
     try:
+        cursor.execute(query, params)
+        top_expenses = cursor.fetchall()
         if len(top_expenses) > 0:
             logger.info(f"Retrieved {len(top_expenses)} top expenses for range {start_date} to {end_date}")
         else:
@@ -322,6 +324,7 @@ def expense_summary(start_date,end_date):
         raise RuntimeError("Error retrieving top expenses")
 
     return total_expenses,top_expenses
+
 
 
 
