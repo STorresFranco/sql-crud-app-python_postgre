@@ -294,7 +294,10 @@ def expense_summary(start_date,end_date):
         try:
             cursor.execute(query,params)
             total_expenses=cursor.fetchall()
-            logger.info("Date range retrieved successfuly for analytics")
+            if len(total_expenses)>0:
+                logger.info("Date range retrieved successfuly for analytics")
+            else:
+                raise RuntimeError("Error retrieving date range")
         except Exception as e:
             logger.error("Failed to retrieve date range for analytics")
             raise RuntimeError("Error retrieving date range")
@@ -319,6 +322,7 @@ def expense_summary(start_date,end_date):
         raise RuntimeError("Error retrieving top expenses")
 
     return total_expenses,top_expenses
+
 
 
 
