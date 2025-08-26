@@ -239,8 +239,8 @@ with querie_tab:
 #Users can execute an analytics dashboard for a given date range
 
 with analytics_tab:
-    start_date=st.date_input("Start Date",value="today",key="start_date_range")
-    end_date=st.date_input("End Date",value="today",key="end_date_range")
+    start_date=st.date_input("Start Date",value="2024-08-01",key="start_date_range")
+    end_date=st.date_input("End Date",value="2024-09-30",key="end_date_range")
     payload={
         "start_date":f"{start_date.year}-{start_date.month:02d}-{start_date.day:02d}",
         "end_date":f"{end_date.year}-{end_date.month:02d}-{end_date.day:02d}"
@@ -289,4 +289,5 @@ with analytics_tab:
 
 
         else:
-            st.error("Analytics retrieve failed")
+            st.error("Analytics retrieve failed - Check date range -")
+
