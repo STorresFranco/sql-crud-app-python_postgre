@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: expense_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: expense_user
+      POSTGRES_PASSWORD: expense_local_dev
+      POSTGRES_DB: expense_db
+
+    ports:
+      - "127.0.0.1:5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/expense_pg_clean.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U expense_user -d expense_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
