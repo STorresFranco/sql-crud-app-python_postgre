@@ -66,3 +66,10 @@ INSERT INTO expenses (id, expense_date, amount, category, notes) VALUES
 (64,'2024-08-01',300,'Food','Groceries for the week'),
 (65,'2024-08-01',1200,'Rent','Monthly rent payment'),
 (66,'2024-08-01',300,'Food','Groceries for the week');
+
+
+SELECT setval(
+    pg_get_serial_sequence('expenses', 'id'),
+    COALESCE((SELECT MAX(id) FROM expenses), 1),
+    true
+);
