@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
 FEATURES = ["expense_date", "amount", "category", "notes"]
-API_URL = st.secrets["API_URL"]
+API_URL = http://localhost:8000
 CATEGORIES=["Food","Rent","Shopping","Entertainment","Other"]
 format_date = "%Y-%m-%d" #For datess
 #%% Functions for frontend design
