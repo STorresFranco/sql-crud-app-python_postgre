@@ -4,7 +4,15 @@ from psycopg2.extras import RealDictCursor
 import contextlib
 from contextlib import contextmanager
 from backend.log_setup import logger_setup
+from pathlib import Path
+import dotenv
+from dotenv import load_dotenv
 import os
+
+#Set project root and solve .env information loading
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
+
 #%% Global variables
 ALLOWED_COLUMNS =["expense_date","amount","category","notes"]
 ALLOWED_OPERATORS =[">",">=","<","<=","=","!=","like"]
@@ -26,6 +34,19 @@ def get_db_cursor(commit=False): #We will set commit option as false to only com
     
     #******* Establishing connection
     logger.info(f"Connection attempt...")
+    
+    #Temporary debug
+    
+    db_url = os.getenv("DATABASE_URL")
+
+    from urllib.parse import urlparse
+
+    parsed = urlparse(db_url)
+
+    print(f"[DEBUG] Database host: {parsed.hostname}", flush=True)
+    print(f"[DEBUG] Database port: {parsed.port}", flush=True)
+    print(f"[DEBUG] Database name: {parsed.path}", flush=True)
+    
     connect = psycopg2.connect(os.getenv("DATABASE_URL"))
 
     if connect.status==extensions.STATUS_READY:
@@ -243,7 +264,7 @@ def delete_record(where_dict,operator_dict):
         try:
             cursor.execute(query,params)
             num_records=cursor.rowcount
-            logger.warinng(f"Deleting {num_records} from expenses table")
+            logger.warning(f"Deleting {num_records} from expenses table")
             logger.info(f"Record delete: Record deleted successfully")
         except Exception as e:
             logger.error(f"Unable to delete record. Error {e}")

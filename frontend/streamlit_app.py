@@ -5,7 +5,7 @@ import requests
 import pandas as pd
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
-
+import os
 #************************************* Streamlit frontend for the PostgreSQL Expense Tracker app.
 
 #Features:
@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 #%% global variables and parameters
 OPERATORS = [">", ">=", "<", "<=", "=", "!=", "like"]
 FEATURES = ["expense_date", "amount", "category", "notes"]
-API_URL = http://localhost:8000
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 CATEGORIES=["Food","Rent","Shopping","Entertainment","Other"]
 format_date = "%Y-%m-%d" #For datess
 #%% Functions for frontend design
