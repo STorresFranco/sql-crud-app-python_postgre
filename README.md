@@ -2,7 +2,7 @@
 
 A full-stack expense tracking application built to explore relational database operations, REST APIs, and interactive analytics.
 
-Users can create, retrieve, update, and delete expense records, run custom filtered queries, and explore spending summaries through a Streamlit interface. The backend uses FastAPI and PostgreSQL. **The current demo runs locally using Docker Compose; the former Railway deployment is no longer required.**
+Users can create, retrieve, update, and delete expense records, run custom filtered queries, and explore spending summaries through a Streamlit interface. The backend uses FastAPI and PostgreSQL. **The current demo runs locally using Docker Compose; the former Railway deployment is no longer up due to free trial expiration.**
 
 ## Application preview
 
