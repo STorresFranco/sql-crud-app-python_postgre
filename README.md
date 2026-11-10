@@ -150,7 +150,5 @@ sql-crud-app-python_postgre/
 
 ## Notes and limitations
 
-- The former Railway deployment is not part of the current reproducible setup.
 - The demo uses local sample records, not a multiuser hosted database.
 - The project is intended to demonstrate SQL CRUD operations, API integration, and basic analytics. It is not presented as a production-hardened expense management service.
-- Tests should be run against a disposable test database because they may create or modify records.
