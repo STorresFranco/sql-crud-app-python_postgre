@@ -83,8 +83,6 @@ To inspect the database:
 docker exec -it expense_postgres psql -U expense_user -d expense_db
 ```
 
-Within `psql`, run `SELECT COUNT(*) FROM expenses;` and leave with `\q`.
-
 ### 4. Install Python dependencies
 
 ```powershell
