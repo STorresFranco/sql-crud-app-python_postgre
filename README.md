@@ -43,7 +43,7 @@ flowchart LR
 
 **Prerequisites:** Git, Docker Desktop with Linux containers enabled, and Python 3.12. The dependencies must be tested in a clean Python 3.12 environment before treating this setup as verified.
 
-### 1. Clone the repository
+### 1. Clone the repository using powershell
 
 ```powershell
 git clone https://github.com/STorresFranco/sql-crud-app-python_postgre.git
